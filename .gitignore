@@ -1,0 +1,7 @@
+/.idea/
+/telegram-bot/mvnw
+/__MACOSX/
+/telegram-bot/src/test/
+/telegram-bot/mvnw.cmd
+/telegram-bot/target/
+/telegram-bot/telegram-bot.iml
