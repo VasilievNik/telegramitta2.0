@@ -10,14 +10,14 @@ import java.util.List;
 @RequestMapping("base")
 public class BDController {
 
-    private static BDService bdService;
+    private final BDService bdService;
 
     public BDController(BDService bdService) {
         this.bdService = bdService;
     }
 
     @PostMapping
-    public static Notify addNotify(@RequestBody Notify notify){
+    public Notify addNotify(@RequestBody Notify notify){
         return bdService.createNotify(notify);
     }
 
@@ -26,7 +26,7 @@ public class BDController {
         return bdService.updateNotify(notifyNew);
     }
 
-    @GetMapping
+    @GetMapping("{id}")
     public Notify findNotify(@PathVariable Long id){
         return bdService.findNotify(id);
     }
