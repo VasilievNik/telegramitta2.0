@@ -26,36 +26,32 @@ public class Notify {
         return this.id;
     }
 
-    public Long setId(Long id){
+    public void setId(Long id){
         this.id = id;
-        return id;
     }
 
     public Long getChatId(){
         return this.chatId;
     }
 
-    public Long setChatId(Long chatId){
+    public void setChatId(Long chatId){
         this.chatId = chatId;
-        return chatId;
     }
 
     public String getText(){
         return this.text;
     }
 
-    public String setText(String text){
+    public void setText(String text){
         this.text = text;
-        return text;
     }
 
     public LocalDateTime getLocalDateTime(){
         return this.localDateTime;
     }
 
-    public LocalDateTime setLocalDateTime(LocalDateTime localDateTime){
+    public void setLocalDateTime(LocalDateTime localDateTime){
         this.localDateTime = localDateTime;
-        return localDateTime;
     }
 
 }

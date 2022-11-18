@@ -2,8 +2,6 @@ package pro.sky.telegrambot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,10 +12,9 @@ import java.util.List;
 @Service
 public class BDService {
 
-    private static BDRepository bdRepository;
     private static final Logger logger = LoggerFactory.getLogger(BDService.class);
+    private final BDRepository bdRepository;
 
-    @Autowired
     public BDService(BDRepository bdRepository) {
         this.bdRepository = bdRepository;
     }
@@ -29,15 +26,22 @@ public class BDService {
 
     public Notify updateNotify(Notify notifyNew) {
         logger.info("updateStudent method used in StudentService");
-        Notify notifyOld = bdRepository.findById(notifyNew.getId()).get();
-        notifyOld = notifyNew;
-        bdRepository.save(notifyOld);
-        return notifyNew;
+        if (bdRepository.existsById(notifyNew.getId())){
+            Notify notifyOld = bdRepository.findById(notifyNew.getId()).get();
+            notifyOld.setChatId(notifyNew.getChatId());
+            notifyOld.setLocalDateTime(notifyNew.getLocalDateTime());
+            notifyOld.setText(notifyNew.getText());
+            return notifyNew;
+        }
+        throw new NotifyNotExistException();
     }
 
     public Notify findNotify(Long id) {
         logger.info("findStudent method used in StudentService");
-        return bdRepository.findById(id).get();
+        if (bdRepository.existsById(id)){
+            return bdRepository.findById(id).get();
+        }
+        throw new NotifyNotExistException();
     }
 
     public void deleteNotify(Long id) {
@@ -46,8 +50,8 @@ public class BDService {
     }
 
     public List<Notify> getDateTimeNotify(LocalDateTime localDateTime){
-        LocalDate date = LocalDate.from(localDateTime);
-        LocalTime time = LocalTime.from(localDateTime);
+        LocalDate date = localDateTime.toLocalDate();
+        LocalTime time = localDateTime.toLocalTime();
         return bdRepository.getAllByLocalDateTime(localDateTime);
     }
 
